@@ -1,10 +1,11 @@
 resource "null_resource" "cidr" {
-triggers = {
+  triggers = {
     always_run = timestamp()
-}
-provisioner "local-exec" {
+  }
+  provisioner "local-exec" {
     on_failure  = fail
-    when = create
+    when        = create
+    working_dir = path.module
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
         az1=$(echo ${data.aws_subnet.i1.availability_zone})
@@ -20,7 +21,7 @@ provisioner "local-exec" {
         echo -e "\x1B[33mAnnotate nodes ......\x1B[0m"
         ./annotate-nodes.sh $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn
         echo -e "\x1B[32mShould see coredns on 100.64.x.y addresses ......\x1B[0m"
-        echo -e "\x1B[32mkubectl get pods -A -o wide | grep coredns\x1B[0m"   
+        echo -e "\x1B[32mkubectl get pods -A -o wide | grep coredns\x1B[0m"
      EOT
-}
+  }
 }
