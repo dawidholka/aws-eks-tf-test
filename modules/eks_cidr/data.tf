@@ -1,0 +1,27 @@
+data "aws_eks_cluster" "eks_cluster" {
+  name = var.cluster-name
+}
+
+data "aws_subnet" "i1" {
+  vpc_id = var.eks-vpc
+  filter {
+    name   = "tag:workshop"
+    values = ["subnet-i1"]
+  }
+}
+
+data "aws_subnet" "i2" {
+  vpc_id = var.eks-vpc
+  filter {
+    name   = "tag:workshop"
+    values = ["subnet-i2"]
+  }
+}
+
+data "aws_subnet" "i3" {
+  vpc_id = var.eks-vpc
+  filter {
+    name   = "tag:workshop"
+    values = ["subnet-i3"]
+  }
+}
