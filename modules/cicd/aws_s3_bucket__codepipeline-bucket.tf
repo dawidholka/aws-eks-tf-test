@@ -1,6 +1,5 @@
-
 data "external" "bucket_name" {
-  program = ["bash", "get-bucket-name.sh"]
+  program = ["bash", "${path.module}/get-bucket-name.sh"]
 }
 
 output "Name" {
@@ -8,7 +7,7 @@ output "Name" {
 }
 
 resource "aws_s3_bucket" "codepipeline-bucket" {
-  bucket = data.external.bucket_name.result.Name
+  bucket         = data.external.bucket_name.result.Name
   hosted_zone_id = "Z1BKCTXD74EZPE"
   request_payer  = "BucketOwner"
   tags           = {}
